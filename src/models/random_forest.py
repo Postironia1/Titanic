@@ -32,9 +32,16 @@ def make_submission(df: pd.DataFrame, model: LinearRegression) -> pd.DataFrame:
     return df[['PassengerId', 'Survived']]
 
 def main():
-    processed_data_path = os.path.join('data', 'processed', 'titanic_processed.csv')
-    df = load_data(processed_data_path)
-    train_model(df)
+    processed_train_data_path = os.path.join('data', 'processed', 'precessed_train.csv')
+    processed_test_data_path = os.path.join('data', 'processed', 'precessed_test.csv')
+  
+    df_train = load_data(processed_data_path)
+    df_test = load_data(processed_data_path)
+  
+    train_model(df_train)
+  
+    # Предсказание на тестовых данных
+    df_test_predicted = predict(df_test, model)
 
 if __name__ == '__main__':
     main()
