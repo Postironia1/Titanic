@@ -27,7 +27,7 @@ def train_model(df: pd.DataFrame) -> LinearRegression:
 def make_submission(df: pd.DataFrame, model: LinearRegression) -> pd.DataFrame:
     """Подготовить датасет для предикта"""
     X = df.drop(columns=[Survived])
-    y = model.predict(X)
+    y_pred = model.predict(X)
     df['Survived'] = (y_pred >= 0.5).astype(int)  
     return df[['PassengerId', 'Survived']]
 
@@ -35,8 +35,8 @@ def main():
     processed_train_data_path = os.path.join('data', 'processed', 'precessed_train.csv')
     processed_test_data_path = os.path.join('data', 'processed', 'precessed_test.csv')
   
-    df_train = load_data(processed_data_path)
-    df_test = load_data(processed_data_path)
+    df_train = load_data(processed_train_data_path)
+    df_test = load_data(processed_test_data_path)
   
     train_model(df_train)
   
