@@ -24,6 +24,13 @@ def train_model(df: pd.DataFrame) -> RandomForestClassifier:
     
     return model
 
+def make_submission(df: pd.DataFrame, model: LinearRegression) -> pd.DataFrame:
+    """Подготовить датасет для предикта"""
+    X = df.drop(columns=[Survived])
+    y = model.predict(X)
+    df['Survived'] = (y_pred >= 0.5).astype(int)  
+    return df[['PassengerId', 'Survived']]
+
 def main():
     processed_data_path = os.path.join('data', 'processed', 'titanic_processed.csv')
     df = load_data(processed_data_path)
